@@ -1,0 +1,21 @@
+{
+  "name": "reloaded-cpp",
+  "displayName": "Reloaded C/C++",
+  "description": "C/C++ must-have colorizer that understands many coding styles and APIs. Best used with \"Dark Reloaded\" or similar theme.",
+  "version": "0.0.1",
+  "publisher": "reloadedextensions",
+  "engines": { "vscode": "*" },
+  "contributes": {
+    "languages": [{
+      "id": "cpp",
+      "extensions": [ ".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".m", ".mm", ".inc", ".inl" ],
+      "aliases": [ "C", "C++", "Cpp", "cpp"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "cpp",
+      "scopeName": "source.cpp",
+      "path": "./syntaxes/c++.json"
+    }]
+  }
+}
