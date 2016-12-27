@@ -41,7 +41,7 @@
     { "include": "#preprocessor-rule-enabled" },
     { "include": "#preprocessor-rule-disabled" },
     { "include": "#preprocessor-rule-other" },
-    { "include": "#comments" },
+    { "include": "#comment" },
     { "include": "#symbols" },
     { "include": "#operators" },
     { "include": "#numbers" },
@@ -190,6 +190,7 @@
         { "name": "variable.other.readwrite.member.cpp", "match": "\\b(f|m)[A-Z]\\w*\\b" }
       ]
     },
+
     "access": {
       "captures": {
         "2": { "name": "punctuation.separator.dot-access.c" },
@@ -198,6 +199,7 @@
       },
       "match": "((\\.)|(->))([a-zA-Z_][a-zA-Z_0-9]*)\\b(?!\\s*\\()"
     },
+
     "block": {
       "patterns": [
         {
@@ -214,6 +216,7 @@
         }
       ]
     },
+
     "block_innards": {
       "patterns": [
         { "include": "#preprocessor-rule-enabled-block" },
@@ -235,6 +238,7 @@
         { "include": "$base" }
       ]
     },
+
     "c_function_call": {
       "captures": {
         "1": { "name": "punctuation.whitespace.function-call.leading.c" },
@@ -244,28 +248,30 @@
       "match": "(?x)\n(?:\n  (?=\\s)\n  (?:(?<=else|new|return) | (?<!\\w)) (\\s+)\n)?\n\n# Actual name\n(\n  \\b\n  (?!\n    (while|for|do|if|else|switch|catch|enumerate|return|sizeof|r?iterate)\n    \\s* \\(\n  )\n  (?:(?!NS)[A-Za-z_][A-Za-z0-9_]*+\\b | ::)++\n)\n\\s*(\\() # Opening bracket",
       "name": "meta.function-call.c"
     },
-    "comments": {
+
+    "comment": {
       "patterns": [
         {
           "name": "comment.block.c",
-          "captures": { "1": { "name": "meta.toc-list.banner.block.c" } },
-          "match": "^/\\* =(\\s*.*?)\\s*= \\*/$\\n?"
+          "match": "^/\\* =(\\s*.*?)\\s*= \\*/$\\n?",
+          "captures": { "1": { "name": "meta.toc-list.banner.block.c" } }
         },
         {
           "name": "comment.block.c",
           "begin": "/\\*",
           "beginCaptures": { "0": { "name": "punctuation.definition.comment.begin.c" } },
           "end": "\\*/",
-          "endCaptures": { "0": { "name": "punctuation.definition.comment.end.c" } }
+          "endCaptures": { "0": { "name": "punctuation.definition.comment.end.c" } },
+          "patterns": [{ "include": "#comment-content" }]
         },
         {
-          "match": "\\*/.*\\n",
-          "name": "invalid.illegal.stray-comment-end.c"
+          "name": "invalid.illegal.stray-comment-end.c",
+          "match": "\\*/.*\\n"
         },
         {
-          "captures": { "1": { "name": "meta.toc-list.banner.line.c" } },
+          "name": "comment.line.banner.cpp",
           "match": "^// =(\\s*.*?)\\s*=\\s*$\\n?",
-          "name": "comment.line.banner.cpp"
+          "captures": { "1": { "name": "meta.toc-list.banner.line.c" } }
         },
         {
           "begin": "(^[ \\t]+)?(?=//)",
@@ -280,6 +286,7 @@
               "end": "\\n",
               "name": "comment.line.double-slash.cpp",
               "patterns": [
+                { "include": "#comment-content" },
                 { "include": "#line_continuation_character" }
               ]
             }
@@ -287,6 +294,39 @@
         }
       ]
     },
+
+    "comment-content": {
+      "patterns": [
+        {
+          "name": "comment.code",
+          "match": "(`)([^`]+)(`)",
+          "captures": {
+            "1": { "name": "comment.code-punctuation" },
+            "2": { "name": "comment.code-block"       , "patterns": [{ "include": "$base" }] },
+            "3": { "name": "comment.code-punctuation" }
+          }
+        },
+        {
+          "match": "([\\\\@](?:b|c|e|em|enum|extends|implements|idlexcept|interface|memberof|namespace|p|param))\\s+([_A-Za-z]\\w*)",
+          "captures": {
+            "1": { "name": "comment.command" },
+            "2": { "name": "comment.variable", "patterns": [{ "include": "#symbols" }] }
+          }
+        },
+        {
+          "match": "[\\\\@](defgroup)\\s+([_A-Za-z]\\w*)",
+          "captures": {
+            "1": { "name": "comment.command" },
+            "2": { "name": "comment.docgroup" } 
+          }
+        },
+        {
+          "name": "comment.command",
+          "match": "[\\\\@]([_A-Za-z]\\w*|\\{\\})"
+        }
+      ]
+    },
+
     "disabled": {
       "begin": "^\\s*#\\s*if(n?def)?\\b.*$",
       "end": "^\\s*#\\s*endif\\b",
@@ -295,6 +335,7 @@
         { "include": "#pragma-mark" }
       ]
     },
+
     "libc": {
       "captures": {
         "1": { "name": "punctuation.whitespace.support.function.leading.c" },
@@ -302,6 +343,7 @@
       },
       "match": "(?x) (\\s*) \\b\n(_Exit|(?:nearbyint|nextafter|nexttoward|netoward|nan)[fl]?|a(?:cos|sin)h?[fl]?|abort|abs|asctime\n|atan(?:[h2]?[fl]?)?|atexit|ato[ifl]|atoll|bsearch|btowc|cabs[fl]?|cacos|cacos[fl]|cacosh[fl]?\n|calloc|carg[fl]?|casinh?[fl]?|catanh?[fl]?|cbrt[fl]?|ccosh?[fl]?|ceil[fl]?|cexp[fl]?|cimag[fl]?\n|clearerr|clock|clog[fl]?|conj[fl]?|copysign[fl]?|cosh?[fl]?|cpow[fl]?|cproj[fl]?|creal[fl]?\n|csinh?[fl]?|csqrt[fl]?|ctanh?[fl]?|ctime|difftime|div|erfc?[fl]?|exit|fabs[fl]?\n|exp(?:2[fl]?|[fl]|m1[fl]?)?|fclose|fdim[fl]?|fe[gs]et(?:env|exceptflag|round)|feclearexcept\n|feholdexcept|feof|feraiseexcept|ferror|fetestexcept|feupdateenv|fflush|fgetpos|fgetw?[sc]\n|floor[fl]?|fmax?[fl]?|fmin[fl]?|fmod[fl]?|fopen|fpclassify|fprintf|fputw?[sc]|fread|free|freopen\n|frexp[fl]?|fscanf|fseek|fsetpos|ftell|fwide|fwprintf|fwrite|fwscanf|genv|get[sc]|getchar|gmtime\n|gwc|gwchar|hypot[fl]?|ilogb[fl]?|imaxabs|imaxdiv|isalnum|isalpha|isblank|iscntrl|isdigit|isfinite\n|isgraph|isgreater|isgreaterequal|isinf|isless(?:equal|greater)?|isw?lower|isnan|isnormal|isw?print\n|isw?punct|isw?space|isunordered|isw?upper|iswalnum|iswalpha|iswblank|iswcntrl|iswctype|iswdigit|iswgraph\n|isw?xdigit|labs|ldexp[fl]?|ldiv|lgamma[fl]?|llabs|lldiv|llrint[fl]?|llround[fl]?|localeconv|localtime\n|log[2b]?[fl]?|log1[p0][fl]?|longjmp|lrint[fl]?|lround[fl]?|malloc|mbr?len|mbr?towc|mbsinit|mbsrtowcs\n|mbstowcs|memchr|memcmp|memcpy|memmove|memset|mktime|modf[fl]?|perror|pow[fl]?|printf|puts|putw?c(?:har)?\n|qsort|raise|rand|remainder[fl]?|realloc|remove|remquo[fl]?|rename|rewind|rint[fl]?|round[fl]?|scalbl?n[fl]?\n|scanf|setbuf|setjmp|setlocale|setvbuf|signal|signbit|sinh?[fl]?|snprintf|sprintf|sqrt[fl]?|srand|sscanf\n|strcat|strchr|strcmp|strcoll|strcpy|strcspn|strerror|strftime|strlen|strncat|strncmp|strncpy|strpbrk\n|strrchr|strspn|strstr|strto[kdf]|strtoimax|strtol[dl]?|strtoull?|strtoumax|strxfrm|swprintf|swscanf\n|system|tan|tan[fl]|tanh[fl]?|tgamma[fl]?|time|tmpfile|tmpnam|tolower|toupper|trunc[fl]?|ungetw?c|va_arg\n|va_copy|va_end|va_start|vfw?printf|vfw?scanf|vprintf|vscanf|vsnprintf|vsprintf|vsscanf|vswprintf|vswscanf\n|vwprintf|vwscanf|wcrtomb|wcscat|wcschr|wcscmp|wcscoll|wcscpy|wcscspn|wcsftime|wcslen|wcsncat|wcsncmp|wcsncpy\n|wcspbrk|wcsrchr|wcsrtombs|wcsspn|wcsstr|wcsto[dkf]|wcstoimax|wcstol[dl]?|wcstombs|wcstoull?|wcstoumax|wcsxfrm\n|wctom?b|wmem(?:set|chr|cpy|cmp|move)|wprintf|wscanf)\\b"
     },
+
     "line_continuation_character": {
       "patterns": [
         {
@@ -310,6 +352,7 @@
         }
       ]
     },
+
     "numbers": {
       "patterns": [
         {
@@ -318,6 +361,7 @@
         }
       ]
     },
+
     "parens": {
       "begin": "\\(",
       "beginCaptures": { "0": { "name": "punctuation.section.parens.begin.c" } },
@@ -326,6 +370,7 @@
       "name": "meta.parens.c",
       "patterns": [{ "include": "$base" }]
     },
+
     "pragma-mark": {
       "captures": {
         "1": { "name": "meta.preprocessor.c" },
@@ -336,6 +381,7 @@
       "match": "^\\s*(((#)\\s*pragma\\s+mark)\\s+(.*))",
       "name": "meta.section"
     },
+
     "preprocessor-rule-disabled": {
       "begin": "^\\s*(((#)if)\\s+(0)\\b).*",
       "beginCaptures": {
@@ -374,6 +420,7 @@
         }
       ]
     },
+
     "preprocessor-rule-disabled-block": {
       "begin": "^\\s*(((#)if)\\s+(0)\\b).*",
       "beginCaptures": {
@@ -412,6 +459,7 @@
         }
       ]
     },
+
     "preprocessor-rule-enabled": {
       "begin": "^\\s*(((#)if)\\s+(0*1)\\b)",
       "beginCaptures": {
@@ -448,6 +496,7 @@
         }
       ]
     },
+
     "preprocessor-rule-enabled-block": {
       "begin": "^\\s*(((#)if)\\s+(0*1)\\b)",
       "beginCaptures": {
@@ -484,6 +533,7 @@
         }
       ]
     },
+
     "preprocessor-rule-other": {
       "begin": "^\\s*(((#)\\s*if(n?def)?)\\b.*?(?:(?=(?://|/\\*))|$))",
       "beginCaptures": {
@@ -499,6 +549,7 @@
       },
       "patterns": [{ "include": "$base" }]
     },
+
     "preprocessor-rule-other-block": {
       "begin": "^\\s*(((#)\\s*if(n?def)?)\\b.*?(?:(?=(?://|/\\*))|$))",
       "beginCaptures": {
@@ -514,6 +565,7 @@
       },
       "patterns": [{ "include": "#block_innards" }]
     },
+
     "operators": {
       "patterns": [
         { "name": "keyword.operator.sizeof"                     , "match": "(?<![\\w$])(sizeof)(?![\\w$])" },
@@ -536,6 +588,7 @@
         }
       ]
     },
+
     "strings": {
       "patterns": [
         {
@@ -573,6 +626,7 @@
         }
       ]
     },
+
     "string_escaped_char": {
       "patterns": [
         {
@@ -585,6 +639,7 @@
         }
       ]
     },
+
     "string_placeholder": {
       "patterns": [
         {
@@ -597,6 +652,7 @@
         }
       ]
     },
+
     "angle_brackets": {
       "begin": "<",
       "end": ">",
@@ -606,6 +662,7 @@
         { "include": "$base" }
       ]
     },
+
     "constructor": {
       "patterns": [
         {
@@ -628,6 +685,7 @@
         }
       ]
     },
+
     "special_block": {
       "patterns": [
         {

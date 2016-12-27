@@ -2,7 +2,7 @@
   "name": "reloaded-cpp",
   "displayName": "Reloaded C/C++",
   "description": "C/C++ must-have colorizer that understands many coding styles and APIs. Best used with \"Dark Reloaded\" or similar theme.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "reloadedextensions",
   "engines": { "vscode": "*" },
   "repository": {
