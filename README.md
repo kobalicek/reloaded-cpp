@@ -7,6 +7,7 @@ The following concepts are provided:
   * It treats C/C++ the same way (no more separate colorizer for C).
   * It supports C and C++ keywords and always highlights them accordingly.
   * It provides configurability for many C/C++ keywords so they can be colorized differently.
+  * It recognizes a formatting of C/C++ strings like `"%d"` and `"\n"`.
   * It recognizes common types and constants of standard C library, Windows, Linux, and MAC.
   * It recognizes "assert()" and "YOUR_OWN_ASSERT()"-like macros.
   * It recognizes "likely()/unlikely()" and "YOUR_OWN_LIKELY()"-like macros.
