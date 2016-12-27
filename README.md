@@ -1,6 +1,6 @@
 # Reloaded C/C++
 
-C/C++ must-have highlighter that understands many coding styles and APIs. Use with ![https://marketplace.visualstudio.com/items?itemName=reloadedextensions.reloaded-themes](Reloaded Themes) extension that understands all the styles provided. This extension is C/C++ specific, but we are working on having all languages highlighted consistently.
+C/C++ must-have highlighter that understands many coding styles and APIs. Use with [Reloaded Themes](https://marketplace.visualstudio.com/items?itemName=reloadedextensions.reloaded-themes) extension that understands all the styles provided. This extension is C/C++ specific, but we are working on having all languages highlighted consistently.
 
 The following concepts are provided:
 
