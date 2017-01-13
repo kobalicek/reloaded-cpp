@@ -15,7 +15,7 @@
     { "include": "#strings" },
     {
       "name": "meta.function.destructor.cpp",
-      "begin": "(?x)\n(?:\n  ^ |                  # beginning of line\n  (?:(?<!else|new|=))  # or word + space before name\n)\n((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*) # actual name\n\\s*(\\()              # opening bracket",
+      "begin": "(?:^|(?:(?<!else|new|=)))((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*)\\s*(\\()",
       "beginCaptures": {
         "1": { "name": "entity.name.function.cpp", "patterns": [{ "include": "#symbols" }] },
         "2": { "name": "punctuation.definition.parameters.begin.cpp" }
@@ -28,7 +28,7 @@
     },
     {
       "name": "meta.function.destructor.prototype.cpp",
-      "begin": "(?x)\n(?:\n  ^ |                  # beginning of line\n  (?:(?<!else|new|=))  # or word + space before name\n)\n((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*) # actual name\n\\s*(\\()              # opening bracket",
+      "begin": "(?:^|(?:(?<!else|new|=)))((?:[A-Za-z_][A-Za-z0-9_]*::)*+~[A-Za-z_][A-Za-z0-9_]*)\\s*(\\()",
       "beginCaptures": {
         "1": { "name": "entity.name.function.cpp", "patterns": [{ "include": "#symbols" }] },
         "2": { "name": "punctuation.definition.parameters.begin.cpp" }
@@ -47,7 +47,7 @@
     { "include": "#block" },
     {
       "name": "meta.function.cpp",
-      "begin": "(?x)\n(?:\n  ^ |\n  (?:\n    (?=\\s)(?<!else|new|return)(?<=\\w)  # word + space before name\n    |\n    (?=\\s*[A-Za-z_])(?<!&&)(?<=[*&>])   # type modifier before name\n  )\n)\n(\\s*)(?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()\n(\n  (?:[A-Za-z_][A-Za-z0-9_]*+|::)++  # actual name\n  |\n  (?:(?<=operator)(?:[-*&<>=+!]+|\\(\\)|\\[\\]))\n)\n\\s*(?=\\()",
+      "begin": "(?:^|(?:(?=\\s)(?<!else|new|return)(?<=\\w)|(?=\\s*[A-Za-z_])(?<!&&)(?<=[*&>])))(\\s*)(?!(while|for|do|if|else|switch|catch|enumerate|return|sizeof|[cr]?iterate)\\s*\\()((?:[A-Za-z_][A-Za-z0-9_]*+|::)++|(?:(?<=operator)(?:[-*&<>=+!]+|\\(\\)|\\[\\]))\n)\n\\s*(?=\\()",
       "beginCaptures": {
         "1": { "name": "punctuation.whitespace.function.leading.cpp" },
         "3": { "name": "entity.name.function.cpp", "patterns": [{ "include": "#symbols" }] },
@@ -57,18 +57,13 @@
       "patterns": [{ "include": "$base" } ]
     },
     { "include": "#misc"},
-    {
-      "include": "#line-continuation"
-    }
+    { "include": "#line-continuation" }
   ],
 
   "repository": {
     "symbols": {
       "patterns": [
-        {
-          "name": "operator.namespace-separator",
-          "match": "::"
-        },
+        { "name": "operator.namespace-separator.cpp", "match": "::" },
         {
           "match": "\\b([_a-zA-Z]\\w*)\\b",
           "captures": {
@@ -137,23 +132,23 @@
                 { "name": "support.constant.predefined.cpp"          , "match": "\\b(TARGET_RT_(?:LITTLE_ENDIAN|BIG_ENDIAN|64_BIT|MAC_CFM|MAC_MACHO))\\b" },
                 { "name": "support.constant.predefined.cpp"          , "match": "\\b(TARGET_CPU_(?:ALPHA|ARM|MIPS|PPC|PPC64|X86))\\b" },
 
-                { "name": "support.constant.std.libc.cpp"            , "match": "\\b(_IOFBF|_IOLBF|_IONBF|EOF|BUFSIZ|FILENAME_MAX|FOPEN_MAX|L_tmpnam|SEEK_SET|SEEK_CUR|SEEK_END|SEEK_DATA|SEEK_HOLE|TMP_MAX)\\b" },
-                { "name": "support.constant.std.libc.cpp"            , "match": "\\b(CHAR_BIT|(SCHAR|SHRT|INT|LONG|LLONG)_(MIN|MAX)|UCHAR_MAX|USHRT_MAX|ULONG_MAX|ULLONG_MAX|MB_LEN_MAX|(FLT|DBL|LDBL)_(MIN|TRUE_MIN|MIN_EXP|MIN_10_EXP|MAX|MAX_EXP|MAX_10_EXP|DIG|EPSILON|MANT_DIG)|FLT_ROUNDS|FLT_EVAL_METHOD|FLT_RADIX|DECIMAL_DIG)\\b" },
-                { "name": "support.constant.signal.libc.cpp"         , "match": "\\bSIG(ABRT|ALRM|BUS|CHLD|CONT|EMT|FPE|HUP|ILL|INFO|INT|KILL|LOST|PIPE|POLL|PROF|PWR|QUIT|RTMIN|RTMAX|SEGV|STOP|SYS|TERM|TSTP|TTIN|TTOU|TRAP|URG|USR1|USR2|VTALRM|WINCH|XCPU|XFSZ)\\b" },
-                { "name": "support.constant.failure.libc.cpp"        , "match": "\\bE(2BIG|ACCES|ADDRINUSE|ADDRNOTAVAIL|AFNOSUPPORT|AGAIN|ALREADY|BADF|BADMSG|BUSY|CANCELED|CHILD|CONNABORTED|CONNREFUSED|CONNRESET|DEADLK|DESTADDRREQ|DOM|DQUOT|EXIST|FAULT|FBIG|HOSTUNREACH|IDRM|ILSEQ|INPROGRESS|INTR|INVAL|IO|ISCONN|ISDIR|LOOP|MFILE|MLINK|MSGSIZE|MULTIHOP|NAMETOOLONG|NETDOWN|NETRESET|NETUNREACH|NFILE|NOBUFS|NODATA|NODEV|NOENT|NOEXEC|NOLCK|NOLINK|NOMEM|NOMSG|NOPROTOOPT|NOSPC|NOSR|NOSTR|NOSYS|NOTCONN|NOTDIR|NOTEMPTY|NOTSOCK|NOTSUP|NOTTY|NXIO|OPNOTSUPP|OVERFLOW|PERM|PIPE|PROTO|PROTONOSUPPORT|PROTOTYPE|RANGE|ROFS|SPIPE|SRCH|STALE|TIME|TIMEDOUT|TXTBSY|WOULDBLOCK|XDEV)\\b" },
-                { "name": "support.constant.success.misc.cpp"        , "match": "\\b(EXIT_SUCCESS|noErr|kErrOk|kErrorOk|kNoErr|kNoError|ERR_OK|ERROR_OK)\\b" },
-                { "name": "support.constant.failure.misc.cpp"        , "match": "\\b(EXIT_FAILURE)\\b" },
-                { "name": "support.constant.mac.cpp"                 , "match": "\\b(kNilOptions|kInvalidID|kVariableLengthArray)\\b" },
+                { "name": "support.constant.libc.cpp"                , "match": "\\b(_IOFBF|_IOLBF|_IONBF|EOF|BUFSIZ|FILENAME_MAX|FOPEN_MAX|L_tmpnam|SEEK_SET|SEEK_CUR|SEEK_END|SEEK_DATA|SEEK_HOLE|TMP_MAX)\\b" },
+                { "name": "support.constant.libc.cpp"                , "match": "\\b(CHAR_BIT|(SCHAR|SHRT|INT|LONG|LLONG)_(MIN|MAX)|UCHAR_MAX|USHRT_MAX|ULONG_MAX|ULLONG_MAX|MB_LEN_MAX|(FLT|DBL|LDBL)_(MIN|TRUE_MIN|MIN_EXP|MIN_10_EXP|MAX|MAX_EXP|MAX_10_EXP|DIG|EPSILON|MANT_DIG)|FLT_ROUNDS|FLT_EVAL_METHOD|FLT_RADIX|DECIMAL_DIG)\\b" },
+                { "name": "support.constant.signal.cpp"              , "match": "\\bSIG(ABRT|ALRM|BUS|CHLD|CONT|EMT|FPE|HUP|ILL|INFO|INT|KILL|LOST|PIPE|POLL|PROF|PWR|QUIT|RTMIN|RTMAX|SEGV|STOP|SYS|TERM|TSTP|TTIN|TTOU|TRAP|URG|USR1|USR2|VTALRM|WINCH|XCPU|XFSZ)\\b" },
+                { "name": "support.constant.failure.cpp"             , "match": "\\bE(2BIG|ACCES|ADDRINUSE|ADDRNOTAVAIL|AFNOSUPPORT|AGAIN|ALREADY|BADF|BADMSG|BUSY|CANCELED|CHILD|CONNABORTED|CONNREFUSED|CONNRESET|DEADLK|DESTADDRREQ|DOM|DQUOT|EXIST|FAULT|FBIG|HOSTUNREACH|IDRM|ILSEQ|INPROGRESS|INTR|INVAL|IO|ISCONN|ISDIR|LOOP|MFILE|MLINK|MSGSIZE|MULTIHOP|NAMETOOLONG|NETDOWN|NETRESET|NETUNREACH|NFILE|NOBUFS|NODATA|NODEV|NOENT|NOEXEC|NOLCK|NOLINK|NOMEM|NOMSG|NOPROTOOPT|NOSPC|NOSR|NOSTR|NOSYS|NOTCONN|NOTDIR|NOTEMPTY|NOTSOCK|NOTSUP|NOTTY|NXIO|OPNOTSUPP|OVERFLOW|PERM|PIPE|PROTO|PROTONOSUPPORT|PROTOTYPE|RANGE|ROFS|SPIPE|SRCH|STALE|TIME|TIMEDOUT|TXTBSY|WOULDBLOCK|XDEV)\\b" },
+                { "name": "support.constant.success.cpp"             , "match": "\\b(EXIT_SUCCESS|noErr|kErrOk|kErrorOk|kNoErr|kNoError|ERR_OK|ERROR_OK)\\b" },
+                { "name": "support.constant.failure.cpp"             , "match": "\\b(EXIT_FAILURE)\\b" },
+                { "name": "support.constant.misc.cpp"                , "match": "\\b(kNilOptions|kInvalidID|kVariableLengthArray)\\b" },
 
-                { "name": "support.type.std.stdint.cpp"              , "match": "\\b((?:int|uint)(?:_least|_fast)?(?:8_t|16_t|32_t|64_t|max_t|ptr_t)|__int8|__int16|__int32|__int64|size_t|ssize_t|ptrdiff_t)\\b" },
-                { "name": "support.type.std.unistd.cpp"              , "match": "\\b(u_char|u_short|u_int|u_long|ushort|uint|ulong|u_quad_t|quad_t|qaddr_t|caddr_t|daddr_t|dev_t|fixpt_t|blkcnt_t|blksize_t|gid_t|in_addr_t|in_port_t|ino_t|key_t|mode_t|nlink_t|id_t|pid_t|segsz_t|swblk_t|uid_t|id_t|clock_t|time_t|useconds_t|suseconds_t)\\b" },
-                { "name": "support.type.std.libc.cpp"                , "match": "\\b(FILE|div_t|ldiv_t|lldiv_t|off_t|off64_t|fpos_t|fpos64_t|jmp_buf|mbstate_t|va_list)\\b" },
-                { "name": "support.type.std.winapi.cpp"              , "match": "\\b((P|PP|LP)?(VOID|BOOL|BOOLEAN|SIZE_T|SSIZE_T|FLOAT|DOUBLE|[U]?(CHAR|WCHAR|SHORT|INT|INT_PTR|INT8|INT16|INT32|INT64|LONG|LONG32|LONG64|LONG_PTR|LONGLONG)|BYTE|[D|Q]?WORD|DWORD32|DWORD64|DWORDLONG|DWORD_PTR|STR|CSTR|WSTR|HALF_PTR)|POINTER_32|POINTER_64|POINTER_SIGNED|POINTER_UNSIGNED)\\b" },
-                { "name": "support.type.std.winapi.cpp"              , "match": "\\b(APIENTRY|WINAPI|ATOM|CALLBACK|COLORREF|HACCEL|HANDLE|HBITMAP|BHRUSH|HCOLORSPACE|HCONV|HCONVLIST|HCURSOR|HDC|HDDEDATA|HDESK|HDROP|HDWP|HENHMETAFILE|HFILE|HFONT|HGDIOBJ|HGLOBAL|HHOOK|HICON|HINSTANCE|HKEY|HKL|HLOCAL|HMENU|HMETAFILE|HMODULE|HMONITOR|HPALETTE|HPEN|HRESULT|HRGN|HRSRC|HSZ|HWINSTA|HWND|LANGID|LCID|LCTYPE|LGRPID|LRESULT|LPHANDLE|LPCOLORREF|PLCID|PHANDLE|PHKEY|SC_HANDLE|SC_LOCK|SERVICE_STATUS_HANDLE|UNICODE_STRING|USN|WPARAM)\\b" },
-                { "name": "support.error-detection.success.cpp"      , "match": "\\b(SUCCEEDED)\\b" },
-                { "name": "support.error-detection.failure.cpp"      , "match": "\\b(FAILED|IS_ERROR)\\b" },
-                { "name": "support.type.macapi.cpp"                  , "match": "\\b(AbsoluteTime|Boolean|Byte|ByteCount|ByteOffset|BytePtr|CompTimeValue|ConstLogicalAddress|ConstStrFileNameParam|ConstStringPtr|Duration|Fixed|FixedPtr|Float32|Float32Point|Float64|Float80|Float96|FourCharCode|Fract|FractPtr|Handle|ItemCount|LogicalAddress|OptionBits|OSErr|OSStatus|OSType|OSTypePtr|PhysicalAddress|ProcessSerialNumber|ProcessSerialNumberPtr|ProcHandle|Ptr|ResType|ResTypePtr|ShortFixed|ShortFixedPtr|SignedByte|SInt16|SInt32|SInt64|SInt8|Size|StrFileName|StringHandle|StringPtr|TimeBase|TimeRecord|TimeScale|TimeValue|TimeValue64|UInt16|UInt32|UInt64|UInt8|UniChar|UniCharCount|UniCharCountPtr|UniCharPtr|UnicodeScalarValue|UniversalProcHandle|UniversalProcPtr|UnsignedFixed|UnsignedFixedPtr|UnsignedWide|UTF16Char|UTF32Char|UTF8Char)\\b" },
-                { "name": "support.variable.std.cpp"                 , "match": "\\b(errno|stdin|stdout|stderr)\\b" },
+                { "name": "support.type.libc.cpp"                    , "match": "\\b((?:int|uint)(?:_least|_fast)?(?:8_t|16_t|32_t|64_t|max_t|ptr_t)|__int8|__int16|__int32|__int64|size_t|ssize_t|ptrdiff_t)\\b" },
+                { "name": "support.type.libc.cpp"                    , "match": "\\b(u_char|u_short|u_int|u_long|ushort|uint|ulong|u_quad_t|quad_t|qaddr_t|caddr_t|daddr_t|dev_t|fixpt_t|blkcnt_t|blksize_t|gid_t|in_addr_t|in_port_t|ino_t|key_t|mode_t|nlink_t|id_t|pid_t|segsz_t|swblk_t|uid_t|id_t|clock_t|time_t|useconds_t|suseconds_t)\\b" },
+                { "name": "support.type.libc.cpp"                    , "match": "\\b(FILE|div_t|ldiv_t|lldiv_t|off_t|off64_t|fpos_t|fpos64_t|jmp_buf|mbstate_t|va_list)\\b" },
+                { "name": "support.type.misc.cpp"                    , "match": "\\b((P|PP|LP)?(VOID|BOOL|BOOLEAN|SIZE_T|SSIZE_T|FLOAT|DOUBLE|[U]?(CHAR|WCHAR|SHORT|INT|INT_PTR|INT8|INT16|INT32|INT64|LONG|LONG32|LONG64|LONG_PTR|LONGLONG)|BYTE|[D|Q]?WORD|DWORD32|DWORD64|DWORDLONG|DWORD_PTR|STR|CSTR|WSTR|HALF_PTR)|POINTER_32|POINTER_64|POINTER_SIGNED|POINTER_UNSIGNED)\\b" },
+                { "name": "support.type.misc.cpp"                    , "match": "\\b(APIENTRY|WINAPI|ATOM|CALLBACK|COLORREF|HACCEL|HANDLE|HBITMAP|BHRUSH|HCOLORSPACE|HCONV|HCONVLIST|HCURSOR|HDC|HDDEDATA|HDESK|HDROP|HDWP|HENHMETAFILE|HFILE|HFONT|HGDIOBJ|HGLOBAL|HHOOK|HICON|HINSTANCE|HKEY|HKL|HLOCAL|HMENU|HMETAFILE|HMODULE|HMONITOR|HPALETTE|HPEN|HRESULT|HRGN|HRSRC|HSZ|HWINSTA|HWND|LANGID|LCID|LCTYPE|LGRPID|LRESULT|LPHANDLE|LPCOLORREF|PLCID|PHANDLE|PHKEY|SC_HANDLE|SC_LOCK|SERVICE_STATUS_HANDLE|UNICODE_STRING|USN|WPARAM)\\b" },
+                { "name": "support.function-name.success.cpp"        , "match": "\\b(SUCCEEDED)\\b" },
+                { "name": "support.function-name.failure.cpp"        , "match": "\\b(FAILED|IS_ERROR)\\b" },
+                { "name": "support.type.misc.cpp"                    , "match": "\\b(AbsoluteTime|Boolean|Byte|ByteCount|ByteOffset|BytePtr|CompTimeValue|ConstLogicalAddress|ConstStrFileNameParam|ConstStringPtr|Duration|Fixed|FixedPtr|Float32|Float32Point|Float64|Float80|Float96|FourCharCode|Fract|FractPtr|Handle|ItemCount|LogicalAddress|OptionBits|OSErr|OSStatus|OSType|OSTypePtr|PhysicalAddress|ProcessSerialNumber|ProcessSerialNumberPtr|ProcHandle|Ptr|ResType|ResTypePtr|ShortFixed|ShortFixedPtr|SignedByte|SInt16|SInt32|SInt64|SInt8|Size|StrFileName|StringHandle|StringPtr|TimeBase|TimeRecord|TimeScale|TimeValue|TimeValue64|UInt16|UInt32|UInt64|UInt8|UniChar|UniCharCount|UniCharCountPtr|UniCharPtr|UnicodeScalarValue|UniversalProcHandle|UniversalProcPtr|UnsignedFixed|UnsignedFixedPtr|UnsignedWide|UTF16Char|UTF32Char|UTF8Char)\\b" },
+                { "name": "support.variable.libc.cpp"                , "match": "\\b(errno|stdin|stdout|stderr)\\b" },
 
                 { "name": "support.function-name.std.cpp"            , "match": "\\b(abort|exit|atexit|at_quick_exit)\\b" },
                 { "name": "support.function-name.std.cpp"            , "match": "\\b(getenv|putenv|setenv)\\b" },
@@ -175,8 +170,7 @@
                 { "name": "support.first-lower-underscore-suffix.cpp", "match": "\\b([a-z]\\w*_)\\b" },
                 { "name": "support.double-underscore-prefix.cpp"     , "match": "\\b(__\\w+)\\b" },
                 { "name": "support.first-upper.cpp"                  , "match": "\\b([_]*[A-Z][A-Z0-9_]*[a-z]+[A-Za-z0-9_]*)\\b" },
-                { "name": "support.all-upper.cpp"                    , "match": "\\b([_]*[A-Z][A-Z0-9_]+)\\b" },
-                { "name": "variable.other.readwrite.member.cpp"      , "match": "\\b(f|m)[A-Z]\\w*\\b" }
+                { "name": "support.all-upper.cpp"                    , "match": "\\b([_]*[A-Z][A-Z0-9_]+)\\b" }
               ]
             }
           }
@@ -197,14 +191,8 @@
       "patterns": [
         {
           "name": "meta.block.cpp",
-          "begin": "\\{",
-          "beginCaptures": {
-            "0": { "name": "punctuation.section.block.begin.cpp" }
-          },
-          "end": "\\}",
-          "endCaptures": {
-            "0": { "name": "punctuation.section.block.end.cpp" }
-          },
+          "begin": "\\{", "beginCaptures": { "0": { "name": "punctuation.section.block.begin.cpp" } },
+          "end"  : "\\}", "endCaptures"  : { "0": { "name": "punctuation.section.block.end.cpp"   } },
           "patterns": [{ "include": "$base" }]
         }
       ]
@@ -322,10 +310,8 @@
 
     "parens": {
       "name": "meta.parens.cpp",
-      "begin": "\\(",
-      "beginCaptures": { "0": { "name": "punctuation.section.parens.begin.cpp" } },
-      "end": "\\)",
-      "endCaptures": { "0": { "name": "punctuation.section.parens.end.cpp" } },
+      "begin": "\\(", "beginCaptures": { "0": { "name": "punctuation.section.parens.begin.cpp" } },
+      "end"  : "\\)", "endCaptures"  : { "0": { "name": "punctuation.section.parens.end.cpp"   } },
       "patterns": [{ "include": "$base" }]
     },
 
@@ -551,10 +537,8 @@
         { "name": "keyword.operator.arithmetic"                 , "match": "%|\\*|/|-|\\+" },
         { "name": "keyword.operator.assignment"                 , "match": "=" },
         {
-          "begin": "\\?",
-          "beginCaptures": { "0": { "name": "keyword.operator.ternary" } },
-          "end": ":",
-          "endCaptures": { "0": { "name": "keyword.operator.ternary" } },
+          "begin": "\\?", "beginCaptures": { "0": { "name": "keyword.operator.ternary" } },
+          "end"  : ":"  , "endCaptures"  : { "0": { "name": "keyword.operator.ternary" } },
           "patterns": [{ "include": "$self" }]
         }
       ]
@@ -662,10 +646,8 @@
           "end": "(?<=\\})|(?=(;|,|\\(|\\)|>|\\[|\\]|=))",
           "patterns": [
             {
-              "begin": "\\{",
-              "beginCaptures": { "0": { "name": "punctuation.definition.scope.cpp" } },
-              "end": "\\}",
-              "endCaptures": { "0": { "name": "punctuation.definition.scope.cpp" } },
+              "begin": "\\{", "beginCaptures": { "0": { "name": "punctuation.definition.scope.cpp" } },
+              "end"  : "\\}", "endCaptures"  : { "0": { "name": "punctuation.definition.scope.cpp" } },
               "patterns": [
                 { "include": "#special_block" },
                 { "include": "#constructor" },
