@@ -267,6 +267,10 @@
           }
         },
         {
+          "name": "comment.note",
+          "match": "\\b((?:TODO|NOTE|HACK|FIXME|WARNING|ERROR|FATAL)(?:\\s*\\([^\\)]*\\)\\s*)?:?)"
+        },
+        {
           "name": "comment.section",
           "match": "(\\[[^\\]]+\\])"
         },
@@ -290,10 +294,8 @@
 
     "line-continuation": {
       "patterns": [
-        {
-          "match": "(\\\\)\\n",
-          "captures": { "1": { "name": "meta.line-continuation.cpp" } }
-        }
+        { "match": "(\\\\\\s+)\\n", "captures": { "1": { "name": "meta.invalid-continuation.cpp" } } },
+        { "match": "(\\\\)\\n"    , "captures": { "1": { "name": "meta.line-continuation.cpp"    } } }
       ]
     },
 
@@ -314,21 +316,6 @@
       "begin": "\\(", "beginCaptures": { "0": { "name": "punctuation.section.parens.begin.cpp" } },
       "end"  : "\\)", "endCaptures"  : { "0": { "name": "punctuation.section.parens.end.cpp"   } },
       "patterns": [{ "include": "$base" }]
-    },
-
-    "preprocessor-ex": {
-      "name": "meta.preprocessor.block",
-      "begin": "^\\s*((#)\\s*([_A-Za-z]\\w*))\\b",
-      "beginCaptures": {
-        "1" : { "name": "meta.preprocessor.command.cpp" },
-        "2" : { "name": "meta.preprocessor.hash.cpp" },
-        "3" : { "name": "meta.preprocessor.keyword.$3.cpp" }
-      },
-      "end": "(?=(?://|/\\*))|(?<!\\\\)(?=\\n)",
-      "patterns": [
-        { "include": "#line-continuation" },
-        { "include": "$base" }
-      ]
     },
 
     "preprocessor": {
