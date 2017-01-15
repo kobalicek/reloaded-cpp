@@ -2,7 +2,7 @@
   "name": "reloaded-cpp",
   "displayName": "Reloaded C/C++",
   "description": "C/C++ must-have highlighter that understands many coding styles and APIs. Use with 'Reloaded Themes' extension.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publisher": "reloadedextensions",
   "engines": { "vscode": "^1.9.0" },
   "categories": ["Languages", "Other"],
@@ -17,8 +17,8 @@
   "contributes": {
     "languages": [{
       "id": "cpp",
-      "extensions": [ ".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".m", ".mm", ".inc", ".inl" ],
-      "aliases": [ "C/C++", "C++", "C", "Cpp", "cpp"],
+      "extensions": [".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".m", ".mm", ".inc", ".inl"],
+      "aliases": ["C/C++", "C++", "C", "Cpp", "cpp"],
       "configuration": "./language-configuration.json"
     }],
     "grammars": [{
