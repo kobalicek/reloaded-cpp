@@ -96,9 +96,12 @@
                 { "name": "constant.language.nullptr.cpp"            , "match": "\\b(nullptr|NULL)\\b" },
                 { "name": "constant.language.nothrow.cpp"            , "match": "\\b(nothrow)\\b" },
                 { "name": "variable.language.this.cpp"               , "match": "\\b(this)\\b" },
+
                 { "name": "support.asm.cpp"                          , "match": "\\b(asm|__asm__)\\b" },
                 { "name": "support.assert.cpp"                       , "match": "\\b(assert|static_assert|[_A-Z][_A-Z0-9]*(?:ASSERT|NOT_REACHED|UNREACHABLE)|CHECK|DCHECK)\\b" },
                 { "name": "support.likely-unlikely.cpp"              , "match": "\\b(likely|unlikely|[_A-Z]+[_A-Z0-9]*(LIKELY|UNLIKELY))\\b" },
+
+                { "name": "support.thirdparty.cpp"                   , "match": "\\b(qobject_cast|Q_OBJECT|Q_CLASSINFO|Q_PROPERTY|Q_OVERRIDE|Q_INTERFACES|Q_ENUMS|Q_FLAGS|Q_SCRIPTABLE|Q_INVOKABLE|Q_SIGNAL|Q_SIGNALS|Q_SLOT|Q_SLOTS|Q_EMIT)\\b" },
 
                 { "name": "support.constant.predefined.cpp"          , "match": "\\b(_M_ALPHA|_M_AMD64|_M_ARM|_M_ARMT|_M_IA64|_M_IX86|_M_PPC|_M_X64)\\b" },
                 { "name": "support.constant.predefined.cpp"          , "match": "\\b(__alpha|__alpha__)\\b" },
@@ -123,20 +126,22 @@
                 { "name": "support.constant.libc.cpp"                , "match": "\\b(_IOFBF|_IOLBF|_IONBF|EOF|BUFSIZ|FILENAME_MAX|FOPEN_MAX|L_tmpnam|SEEK_SET|SEEK_CUR|SEEK_END|SEEK_DATA|SEEK_HOLE|TMP_MAX)\\b" },
                 { "name": "support.constant.libc.cpp"                , "match": "\\b(CHAR_BIT|(SCHAR|SHRT|INT|LONG|LLONG)_(MIN|MAX)|UCHAR_MAX|USHRT_MAX|ULONG_MAX|ULLONG_MAX|MB_LEN_MAX|(FLT|DBL|LDBL)_(MIN|TRUE_MIN|MIN_EXP|MIN_10_EXP|MAX|MAX_EXP|MAX_10_EXP|DIG|EPSILON|MANT_DIG)|FLT_ROUNDS|FLT_EVAL_METHOD|FLT_RADIX|DECIMAL_DIG)\\b" },
                 { "name": "support.constant.signal.cpp"              , "match": "\\bSIG(ABRT|ALRM|BUS|CHLD|CONT|EMT|FPE|HUP|ILL|INFO|INT|KILL|LOST|PIPE|POLL|PROF|PWR|QUIT|RTMIN|RTMAX|SEGV|STOP|SYS|TERM|TSTP|TTIN|TTOU|TRAP|URG|USR1|USR2|VTALRM|WINCH|XCPU|XFSZ)\\b" },
-                { "name": "support.constant.success.misc.cpp"        , "match": "\\b(kErrOk|kErrorOk|kNoErr|kNoError|noErr|ERR_OK|ERROR_OK)\\b" },
+
                 { "name": "support.constant.success.libc.cpp"        , "match": "\\b(EXIT_SUCCESS)\\b" },
-                { "name": "support.constant.failure.libc.cpp"        , "match": "\\bE(2BIG|ACCES|ADDRINUSE|ADDRNOTAVAIL|AFNOSUPPORT|AGAIN|ALREADY|BADF|BADMSG|BUSY|CANCELED|CHILD|CONNABORTED|CONNREFUSED|CONNRESET|DEADLK|DESTADDRREQ|DOM|DQUOT|EXIST|FAULT|FBIG|HOSTUNREACH|IDRM|ILSEQ|INPROGRESS|INTR|INVAL|IO|ISCONN|ISDIR|LOOP|MFILE|MLINK|MSGSIZE|MULTIHOP|NAMETOOLONG|NETDOWN|NETRESET|NETUNREACH|NFILE|NOBUFS|NODATA|NODEV|NOENT|NOEXEC|NOLCK|NOLINK|NOMEM|NOMSG|NOPROTOOPT|NOSPC|NOSR|NOSTR|NOSYS|NOTCONN|NOTDIR|NOTEMPTY|NOTSOCK|NOTSUP|NOTTY|NXIO|OPNOTSUPP|OVERFLOW|PERM|PIPE|PROTO|PROTONOSUPPORT|PROTOTYPE|RANGE|ROFS|SPIPE|SRCH|STALE|TIME|TIMEDOUT|TXTBSY|WOULDBLOCK|XDEV)\\b" },
                 { "name": "support.constant.failure.libc.cpp"        , "match": "\\b(EXIT_FAILURE)\\b" },
+                { "name": "support.constant.failure.libc.cpp"        , "match": "\\bE(2BIG|ACCES|ADDRINUSE|ADDRNOTAVAIL|AFNOSUPPORT|AGAIN|ALREADY|BADF|BADMSG|BUSY|CANCELED|CHILD|CONNABORTED|CONNREFUSED|CONNRESET|DEADLK|DESTADDRREQ|DOM|DQUOT|EXIST|FAULT|FBIG|HOSTUNREACH|IDRM|ILSEQ|INPROGRESS|INTR|INVAL|IO|ISCONN|ISDIR|LOOP|MFILE|MLINK|MSGSIZE|MULTIHOP|NAMETOOLONG|NETDOWN|NETRESET|NETUNREACH|NFILE|NOBUFS|NODATA|NODEV|NOENT|NOEXEC|NOLCK|NOLINK|NOMEM|NOMSG|NOPROTOOPT|NOSPC|NOSR|NOSTR|NOSYS|NOTCONN|NOTDIR|NOTEMPTY|NOTSOCK|NOTSUP|NOTTY|NXIO|OPNOTSUPP|OVERFLOW|PERM|PIPE|PROTO|PROTONOSUPPORT|PROTOTYPE|RANGE|ROFS|SPIPE|SRCH|STALE|TIME|TIMEDOUT|TXTBSY|WOULDBLOCK|XDEV)\\b" },
+
+                { "name": "support.constant.success.misc.cpp"        , "match": "\\b(CAIRO_STATUS_SUCCESS)\\b" },
+                { "name": "support.constant.failure.misc.cpp"        , "match": "\\b(CAIRO_STATUS_[A-Z0-9]+)\\b" },
+
+                { "name": "support.variable.libc.cpp"                , "match": "\\b(errno|stdin|stdout|stderr)\\b" },
 
                 { "name": "support.type.libc.cpp"                    , "match": "\\b((?:int|uint)(?:_least|_fast)?(?:8_t|16_t|32_t|64_t|max_t|ptr_t)|__int8|__int16|__int32|__int64|size_t|ssize_t|ptrdiff_t)\\b" },
                 { "name": "support.type.libc.cpp"                    , "match": "\\b(u_char|u_short|u_int|u_long|ushort|uint|ulong|u_quad_t|quad_t|qaddr_t|caddr_t|daddr_t|dev_t|fixpt_t|blkcnt_t|blksize_t|gid_t|in_addr_t|in_port_t|ino_t|key_t|mode_t|nlink_t|id_t|pid_t|segsz_t|swblk_t|uid_t|id_t|clock_t|time_t|useconds_t|suseconds_t)\\b" },
                 { "name": "support.type.libc.cpp"                    , "match": "\\b(FILE|div_t|ldiv_t|lldiv_t|off_t|off64_t|fpos_t|fpos64_t|jmp_buf|mbstate_t|va_list)\\b" },
                 { "name": "support.type.misc.cpp"                    , "match": "\\b((P|PP|LP)?(VOID|BOOL|BOOLEAN|SIZE_T|SSIZE_T|FLOAT|DOUBLE|[U]?(CHAR|WCHAR|SHORT|INT|INT_PTR|INT8|INT16|INT32|INT64|LONG|LONG32|LONG64|LONG_PTR|LONGLONG)|BYTE|[D|Q]?WORD|DWORD32|DWORD64|DWORDLONG|DWORD_PTR|STR|CSTR|WSTR|HALF_PTR)|POINTER_32|POINTER_64|POINTER_SIGNED|POINTER_UNSIGNED)\\b" },
                 { "name": "support.type.misc.cpp"                    , "match": "\\b(APIENTRY|WINAPI|ATOM|CALLBACK|COLORREF|HACCEL|HANDLE|HBITMAP|BHRUSH|HCOLORSPACE|HCONV|HCONVLIST|HCURSOR|HDC|HDDEDATA|HDESK|HDROP|HDWP|HENHMETAFILE|HFILE|HFONT|HGDIOBJ|HGLOBAL|HHOOK|HICON|HINSTANCE|HKEY|HKL|HLOCAL|HMENU|HMETAFILE|HMODULE|HMONITOR|HPALETTE|HPEN|HRESULT|HRGN|HRSRC|HSZ|HWINSTA|HWND|LANGID|LCID|LCTYPE|LGRPID|LRESULT|LPHANDLE|LPCOLORREF|PLCID|PHANDLE|PHKEY|SC_HANDLE|SC_LOCK|SERVICE_STATUS_HANDLE|UNICODE_STRING|USN|WPARAM)\\b" },
-                { "name": "support.function-name.success.cpp"        , "match": "\\b(SUCCEEDED)\\b" },
-                { "name": "support.function-name.failure.cpp"        , "match": "\\b(FAILED|IS_ERROR)\\b" },
                 { "name": "support.type.misc.cpp"                    , "match": "\\b(AbsoluteTime|Boolean|Byte|ByteCount|ByteOffset|BytePtr|CompTimeValue|ConstLogicalAddress|ConstStrFileNameParam|ConstStringPtr|Duration|Fixed|FixedPtr|Float32|Float32Point|Float64|Float80|Float96|FourCharCode|Fract|FractPtr|Handle|ItemCount|LogicalAddress|OptionBits|OSErr|OSStatus|OSType|OSTypePtr|PhysicalAddress|ProcessSerialNumber|ProcessSerialNumberPtr|ProcHandle|Ptr|ResType|ResTypePtr|ShortFixed|ShortFixedPtr|SignedByte|SInt16|SInt32|SInt64|SInt8|Size|StrFileName|StringHandle|StringPtr|TimeBase|TimeRecord|TimeScale|TimeValue|TimeValue64|UInt16|UInt32|UInt64|UInt8|UniChar|UniCharCount|UniCharCountPtr|UniCharPtr|UnicodeScalarValue|UniversalProcHandle|UniversalProcPtr|UnsignedFixed|UnsignedFixedPtr|UnsignedWide|UTF16Char|UTF32Char|UTF8Char)\\b" },
-                { "name": "support.variable.libc.cpp"                , "match": "\\b(errno|stdin|stdout|stderr)\\b" },
 
                 { "name": "support.function-name.std.cpp"            , "match": "\\b(abort|exit|atexit|at_quick_exit)\\b" },
                 { "name": "support.function-name.std.cpp"            , "match": "\\b(getenv|putenv|setenv)\\b" },
@@ -148,8 +153,12 @@
                 { "name": "support.function-name.std.cpp"            , "match": "\\b(random|srandom|rand|srand|initstate|setstate)\\b" },
                 { "name": "support.function-name.std.cpp"            , "match": "\\b(v?[fs]?printf|v?snprintf|v?[fs]?scanf|fopen|freopen|fdopen|fclose|fflush|f?getc|f?gets|f?puts|ungetc|fread|fwrite|fseek|ftell|rewind|fgetpos|fsetpos|clearerr|feof|ferror)\\b" },
                 { "name": "support.function-name.std.cpp"            , "match": "\\b(ato(?:f|i|l|ll)(?:_l)?|strto(?:f|d|ld|l|ul|ll|ull|i64|ui64)(?:_l)?|ecvt|fcvt|gcvt)\\b" },
-                { "name": "support.constant.failure.misc.cpp"        , "match": "\\b(kError\\w+)\\b" },
-                { "name": "support.constant.failure.misc.cpp"        , "match": "\\bERROR_[_A-Z0-9]*\\b" },
+
+                { "name": "support.function-name.success.cpp"        , "match": "\\b(SUCCEEDED)\\b" },
+                { "name": "support.function-name.failure.cpp"        , "match": "\\b(FAILED|IS_ERROR)\\b" },
+
+                { "name": "support.constant.success.misc.cpp"        , "match": "\\b(kErrOk|kErrorOk|kNoErr|kNoError|noErr|ERR_OK|ERROR_OK)\\b" },
+                { "name": "support.constant.failure.misc.cpp"        , "match": "\\b(kError\\w+|ERROR_[_A-Z0-9]*)\\b" },
 
                 { "name": "support.constant.predefined.cpp"          , "match": "\\b(__cxx_[a-z0-9_]+)\\b" },
                 { "name": "support.constant.k-something.cpp"         , "match": "\\bk[A-Z]\\w*\\b" },
@@ -265,7 +274,7 @@
           "match": "([\\\\@](?:addtogroup|defgroup))\\s+([_A-Za-z]\\w*)",
           "captures": {
             "1": { "name": "comment.command" },
-            "2": { "name": "comment.docgroup" } 
+            "2": { "name": "comment.docgroup" }
           }
         },
         {
