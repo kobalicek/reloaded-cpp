@@ -1,30 +1,69 @@
 {
-  "name": "reloaded-cpp",
-  "displayName": "Reloaded C/C++",
-  "description": "C/C++ must-have highlighter that understands many coding styles and APIs. Use with 'Reloaded Themes' extension.",
-  "version": "0.1.6",
-  "publisher": "reloadedextensions",
-  "engines": { "vscode": "^1.9.0" },
-  "categories": ["Languages", "Other"],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kobalicek/reloaded-cpp.git"
-  },
-  "bugs": {
-    "url": "https://github.com/kobalicek/reloaded-cpp/issues"
-  },
-  "keywords": ["C/C++", "C++", "C", "Syntax", "Highlight"],
-  "contributes": {
-    "languages": [{
-      "id": "cpp",
-      "extensions": [".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".hxx", ".m", ".mm", ".inc", ".inl"],
-      "aliases": ["C/C++", "C++", "C", "Cpp", "cpp"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "cpp",
-      "scopeName": "source.cpp",
-      "path": "./syntaxes/c++.json"
-    }]
-  }
+	"name": "reloaded-cpp",
+	"displayName": "Reloaded C/C++",
+	"description": "C/C++ must-have highlighter that understands many coding styles and APIs. Use with 'Reloaded Themes' extension.",
+	"version": "0.1.7",
+	"publisher": "reloadedextensions",
+	"engines": {
+		"vscode": "^1.9.0"
+	},
+	"categories": [
+		"Languages",
+		"Other"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kobalicek/reloaded-cpp.git"
+	},
+	"bugs": {
+		"url": "https://github.com/kobalicek/reloaded-cpp/issues"
+	},
+	"keywords": [
+		"C/C++",
+		"C++",
+		"C",
+		"Syntax",
+		"Highlight"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "cpp",
+				"extensions": [
+					".c",
+					".cc",
+					".cpp",
+					".cxx",
+					".h",
+					".hh",
+					".hpp",
+					".hxx",
+					".m",
+					".mm",
+					".inc",
+					".inl"
+				],
+				"aliases": [
+					"C/C++",
+					"C++",
+					"C",
+					"Cpp",
+					"cpp"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "cpp",
+				"scopeName": "source.cpp",
+				"path": "./syntaxes/c++.json"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "68fb4994-c20a-4fec-9e73-71380c6b9249",
+		"publisherDisplayName": "Reloaded Extensions",
+		"publisherId": "ecdd83d0-03c8-42b7-9008-c878f0153524"
+	}
 }
