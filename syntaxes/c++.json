@@ -298,7 +298,7 @@
     "numbers": {
       "patterns": [
         {
-          "match": "\\b((?:0[xX][\\da-fA-F]*)|(?:0[bB][_01]*)|(?:(?:[0-9]+\\.?\\d*)|(?:\\.\\d+))(?:(?:e|E)(?:\\+|-)?\\d+)?)(f|F|l|L|ll|LL|u|U|ul|UL|ull|ULL)?\\b",
+          "match": "\\b((?:0[xX](?:[']?[\\da-fA-F]+)+)|(?:0[bB](?:[']?[_01]+)+)|(?:(?:[0-9](?:[']?[0-9]+)*\\.?\\d*)|(?:\\.\\d+))(?:(?:e|E)(?:\\+|-)?\\d+)?)(f|F|l|L|ll|LL|u|U|ul|UL|ull|ULL)?\\b",
           "captures": {
             "1": { "name": "constant.numeric.cpp" },
             "2": { "name": "constant.number-suffix.cpp" }
