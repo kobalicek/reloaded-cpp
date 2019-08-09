@@ -64,6 +64,24 @@
     "symbols": {
       "patterns": [
         { "name": "operator.namespace-separator.cpp", "match": "::" },
+        { "name": "punctuation.line-end.cpp", "match": ";" },
+        { "name": "punctuation.case-divider.cpp", "match": ":" },
+        {
+          "match": "((\\.)|(->))([a-zA-Z_][a-zA-Z_0-9]*)\\b(\\s*\\()",
+          "captures": {
+            "2": { "name": "punctuation.separator.dot-access.function.cpp" },
+            "3": { "name": "punctuation.separator.pointer-access.function.cpp" },
+            "4": { "name": "variable.other.member-function.cpp", "patterns": [{ "include": "#symbols" }] }
+          }
+        },
+        {
+          "name": "support.namespace-outer.cpp",
+          "match": "\\b([_a-z][_a-zA-Z0-9]*)(::)",
+          "captures": {
+            "1": { "name": "support.namespace-name.cpp" },
+            "0": { "name": "operator.namespace-separator.cpp" }
+          }
+        },
         {
           "match": "\\b([_a-zA-Z]\\w*)\\b",
           "captures": {
@@ -632,7 +650,8 @@
             "2": { "name": "storage.type.cpp" },
             "3": { "name": "entity.name.type.cpp", "patterns": [{ "include": "#symbols" }] }
           },
-          "end": "(;)"
+          "end": "(;)",
+          "endCaptures": { "0": { "name": "punctuation.definition.scope.cpp" } }
         },
         {
           "name": "meta.namespace-block.cpp",
