@@ -114,6 +114,7 @@
                 { "name": "constant.language.nullptr.cpp"            , "match": "\\b(nullptr|NULL)\\b" },
                 { "name": "constant.language.nothrow.cpp"            , "match": "\\b(nothrow)\\b" },
                 { "name": "variable.language.this.cpp"               , "match": "\\b(this)\\b" },
+                { "name": "variable.language.member.cpp"             , "match": "\\b((m_)[_a-zA-Z]*)" },
 
                 { "name": "support.asm.cpp"                          , "match": "\\b(asm|__asm__)\\b" },
                 { "name": "support.assert.cpp"                       , "match": "\\b(assert|static_assert|[_A-Z][_A-Z0-9]*(?:ASSERT|NOT_REACHED|UNREACHABLE)|CHECK|DCHECK)\\b" },
