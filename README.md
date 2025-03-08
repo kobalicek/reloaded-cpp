@@ -2,6 +2,10 @@
 
 Extension that replaces the built-in C/C++ tokenizer/grammar and introduces additional tokens that can be styled. This extension should be used together with [Reloaded Themes](https://marketplace.visualstudio.com/items?itemName=reloadedextensions.reloaded-themes) extension as the additional tokens are new and not recognized by other themes!
 
+# Deprecated
+
+  * THIS EXTENSION IS DEPRECATED. It was written at a time when there was very little customization in vscode. Now it't much better and this extension doesn't provide anything that cannot be set in user config now. Please don't use this extension anymore.
+
 # Important
 
   * This extension DOES NOT provide code assistance, it just recognizes common patterns used in today's C++ code.
